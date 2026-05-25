@@ -87,6 +87,36 @@ Type-safe. Validated at build time. Version tracked.
 
 ---
 
+## Load from registry
+
+Define prompts in one language, load them in another — from the same registry:
+
+```ts
+// TypeScript — load a prompt defined anywhere (TS or Python)
+import { loadFromRegistry } from 'promptschema'
+
+const prompt = loadFromRegistry('order-assistant')
+// prompt.name    → 'order-assistant'
+// prompt.version → '2.0.0'
+// prompt.model   → 'openai/gpt-4o'
+
+const validated = prompt.validate({ order: 'Dress #204', lang: 'en', total: 149 })
+const result = await prompt.run({ order: 'Dress #204', lang: 'en', total: 149 })
+```
+
+```python
+# Python — same registry, same prompt, same validation
+from promptschema import load_from_registry
+
+OrderPrompt = load_from_registry("order-assistant")
+instance = OrderPrompt(order="Dress #204", lang="en", total=149)
+result = await instance.arun()
+```
+
+The registry stores JSON Schema, so both languages reconstruct identical validation from a single source of truth.
+
+---
+
 ## Install
 
 ```bash
@@ -110,6 +140,7 @@ Requires Node >= 18 or Python >= 3.10.
 - 🔍 **Diffable** — readable diffs between prompt versions
 - ⚡ **Any model** — OpenAI, Anthropic, Gemini, Ollama, or your own adapter
 - 🌍 **Dual** — identical API in TypeScript and Python, shared registry
+- 🔄 **Cross-language** — define in TS, load in Python (or vice versa) via `loadFromRegistry`
 - 🪶 **Lightweight** — zero runtime dependencies beyond Zod/Pydantic
 
 ---

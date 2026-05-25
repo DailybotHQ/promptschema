@@ -18,3 +18,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - CLI with `init`, `status`, `bump`, `diff`, `validate`, `list`, `history` commands
 - Cross-language parity (TypeScript ↔ Python share the same registry format)
 - Cost estimation for supported models
+- `loadFromRegistry()` (TS) and `load_from_registry()` (Python) for runtime prompt loading from the registry
+- JSON Schema → Zod converter for reconstructing typed schemas at runtime
+- JSON Schema → dynamic Pydantic model converter with `anyOf` support
+- Cross-language round-trip tests using a shared fixture registry
+- Integration tests for all LLM adapters with real API calls
+- ESLint 9 flat config with `typescript-eslint` and `eslint-config-prettier`
+- Bundle size-check GitHub Actions workflow (75kb/file, 150kb total thresholds)
+- `CONTRIBUTING.md` with setup guide, workflow, and PR checklist
