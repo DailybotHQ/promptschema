@@ -2,7 +2,7 @@ import { resolve } from 'node:path'
 import { readRegistry, DEFAULT_REGISTRY_PATH } from '../../versioning/index.js'
 import { table, green, yellow, dim, CHECK, WARN } from '../output.js'
 
-export async function runStatus(flags: Record<string, boolean | string>): Promise<void> {
+export async function runStatus(_flags: Record<string, boolean | string>): Promise<void> {
   const registryPath = resolve(process.cwd(), DEFAULT_REGISTRY_PATH)
   const registry = readRegistry(registryPath)
 

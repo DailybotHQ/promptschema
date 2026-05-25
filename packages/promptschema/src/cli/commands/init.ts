@@ -3,7 +3,7 @@ import { resolve } from 'node:path'
 import { createEmptyRegistry, writeRegistry, DEFAULT_REGISTRY_PATH } from '../../versioning/index.js'
 import { green, yellow, CHECK, WARN } from '../output.js'
 
-export async function runInit(flags: Record<string, boolean | string>): Promise<void> {
+export async function runInit(_flags: Record<string, boolean | string>): Promise<void> {
   const registryPath = resolve(process.cwd(), DEFAULT_REGISTRY_PATH)
 
   if (existsSync(registryPath)) {

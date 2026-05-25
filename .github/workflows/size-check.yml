@@ -1,0 +1,78 @@
+name: Size Check
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  size-check:
+    name: Bundle size
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+
+      - name: Measure bundle sizes
+        id: size
+        run: |
+          INDEX_JS=$(wc -c < packages/promptschema/dist/index.js | tr -d ' ')
+          INDEX_CJS=$(wc -c < packages/promptschema/dist/index.cjs | tr -d ' ')
+          CLI_JS=$(wc -c < packages/promptschema/dist/cli/index.js | tr -d ' ')
+          TOTAL=$((INDEX_JS + INDEX_CJS + CLI_JS))
+
+          echo "index_js=$INDEX_JS" >> "$GITHUB_OUTPUT"
+          echo "index_cjs=$INDEX_CJS" >> "$GITHUB_OUTPUT"
+          echo "cli_js=$CLI_JS" >> "$GITHUB_OUTPUT"
+          echo "total=$TOTAL" >> "$GITHUB_OUTPUT"
+
+          INDEX_JS_KB=$(echo "scale=1; $INDEX_JS / 1024" | bc)
+          INDEX_CJS_KB=$(echo "scale=1; $INDEX_CJS / 1024" | bc)
+          CLI_JS_KB=$(echo "scale=1; $CLI_JS / 1024" | bc)
+          TOTAL_KB=$(echo "scale=1; $TOTAL / 1024" | bc)
+
+          echo "## Bundle Size Report" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "| File | Size |" >> "$GITHUB_STEP_SUMMARY"
+          echo "|---|---|" >> "$GITHUB_STEP_SUMMARY"
+          echo "| \`dist/index.js\` (ESM) | ${INDEX_JS_KB}kb |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| \`dist/index.cjs\` (CJS) | ${INDEX_CJS_KB}kb |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| \`dist/cli/index.js\` | ${CLI_JS_KB}kb |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| **Total** | **${TOTAL_KB}kb** |" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "Threshold: 75kb per file, 150kb total" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Check thresholds
+        run: |
+          MAX_FILE=76800    # 75kb per file
+          MAX_TOTAL=153600  # 150kb total
+
+          FAIL=0
+
+          if [ "${{ steps.size.outputs.index_js }}" -gt "$MAX_FILE" ]; then
+            echo "::error::dist/index.js exceeds 75kb limit"
+            FAIL=1
+          fi
+          if [ "${{ steps.size.outputs.index_cjs }}" -gt "$MAX_FILE" ]; then
+            echo "::error::dist/index.cjs exceeds 75kb limit"
+            FAIL=1
+          fi
+          if [ "${{ steps.size.outputs.cli_js }}" -gt "$MAX_FILE" ]; then
+            echo "::error::dist/cli/index.js exceeds 75kb limit"
+            FAIL=1
+          fi
+          if [ "${{ steps.size.outputs.total }}" -gt "$MAX_TOTAL" ]; then
+            echo "::error::Total bundle exceeds 150kb limit"
+            FAIL=1
+          fi
+
+          if [ "$FAIL" -eq 1 ]; then
+            exit 1
+          fi
+
+          echo "All files within size limits"

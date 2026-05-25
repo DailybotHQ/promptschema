@@ -10,7 +10,7 @@ import { red, CROSS } from '../output.js'
 
 export async function runDiff(
   args: string[],
-  flags: Record<string, boolean | string>,
+  _flags: Record<string, boolean | string>,
 ): Promise<void> {
   const [name, v1, v2] = args
 

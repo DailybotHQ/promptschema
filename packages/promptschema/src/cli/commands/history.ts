@@ -8,7 +8,7 @@ import { bold, dim, red, yellow, CROSS, WARN } from '../output.js'
 
 export async function runHistory(
   args: string[],
-  flags: Record<string, boolean | string>,
+  _flags: Record<string, boolean | string>,
 ): Promise<void> {
   const name = args[0]
   if (!name) {

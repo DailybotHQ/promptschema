@@ -1,4 +1,3 @@
-import type { ZodType, infer as ZodInfer } from 'zod'
 import type { PromptDefinition, PromptInstance, PromptResult, RunOptions } from './types.js'
 import { LLMSchemaValidationError, type ValidationIssue } from './errors.js'
 import { validateInput } from './schema.js'

@@ -2,7 +2,7 @@ import { resolve } from 'node:path'
 import { readRegistry, DEFAULT_REGISTRY_PATH } from '../../versioning/index.js'
 import { green, red, CHECK, CROSS } from '../output.js'
 
-export async function runValidate(flags: Record<string, boolean | string>): Promise<void> {
+export async function runValidate(_flags: Record<string, boolean | string>): Promise<void> {
   const registryPath = resolve(process.cwd(), DEFAULT_REGISTRY_PATH)
   const registry = readRegistry(registryPath)
 
