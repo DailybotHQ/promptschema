@@ -1,0 +1,31 @@
+{
+  "$schema": "https://promptschema.dev/registry.schema.json",
+  "version": "1",
+  "prompts": {
+    "order-assistant": {
+      "current": "1.0.0",
+      "history": [
+        {
+          "version": "1.0.0",
+          "createdAt": "2026-05-25T10:00:00Z",
+          "author": "cross-lang-test",
+          "templateHash": "aabbccdd",
+          "schemaHash": "eeff0011",
+          "model": "openai/gpt-4o-mini",
+          "changelog": "initial version with all field types",
+          "breaking": false,
+          "schema": {
+            "type": "object",
+            "properties": {
+              "order": { "type": "string" },
+              "lang": { "enum": ["es", "en"] },
+              "total": { "type": "number", "exclusiveMinimum": 0 },
+              "discount": { "type": "boolean" }
+            },
+            "required": ["order", "lang", "total"]
+          }
+        }
+      ]
+    }
+  }
+}

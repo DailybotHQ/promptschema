@@ -55,6 +55,9 @@ export type {
 
 export { runPrompt } from './runner.js'
 
+export { loadFromRegistry } from './load-from-registry.js'
+export type { LoadOptions } from './load-from-registry.js'
+
 export {
   registerAdapter,
   resolveAdapter,
