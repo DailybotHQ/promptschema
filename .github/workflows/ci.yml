@@ -58,3 +58,39 @@ jobs:
       - run: pip install -e ".[dev]"
         working-directory: packages/promptschema-python
       - run: pnpm --filter promptschema vitest run tests/cross-language/
+
+  # Integration tests call real LLM APIs. They run only on pushes to main
+  # (not on PRs) to avoid leaking secrets and to minimize API costs.
+  # Tests skip gracefully if the corresponding secret is not configured.
+  integration:
+    name: Integration tests (real APIs)
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: [typescript, python]
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pnpm install --frozen-lockfile
+      - run: pip install -e ".[dev,openai,anthropic,gemini]"
+        working-directory: packages/promptschema-python
+      - name: TypeScript integration tests
+        run: pnpm --filter promptschema test:integration
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      - name: Python integration tests
+        run: pytest tests/integration/ -v
+        working-directory: packages/promptschema-python
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}

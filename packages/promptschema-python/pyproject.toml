@@ -36,6 +36,9 @@ Repository = "https://github.com/tuusuario/promptschema"
 [tool.pytest.ini_options]
 testpaths    = ["tests"]
 asyncio_mode = "auto"
+markers      = [
+  "integration: tests requiring real API keys (run with pytest tests/integration/)",
+]
 
 [tool.coverage.run]
 source = ["promptschema"]

@@ -8,6 +8,7 @@
     "test": {
       "dependsOn": ["build"]
     },
+    "test:integration": {},
     "lint": {},
     "typecheck": {
       "dependsOn": ["^build"]

@@ -6,6 +6,7 @@
     "test": "turbo test",
     "lint": "turbo lint",
     "typecheck": "turbo typecheck",
+    "test:integration": "turbo test:integration",
     "dev": "turbo dev --parallel"
   },
   "devDependencies": {
