@@ -4,6 +4,13 @@
   "description": "Typed, versioned prompts for LLMs — the Zod for AI prompts",
   "keywords": ["llm", "prompts", "ai", "zod", "typescript", "openai", "anthropic"],
   "license": "MIT",
+  "author": "Oscar",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tuusuario/promptschema",
+    "directory": "packages/promptschema"
+  },
+  "homepage": "https://github.com/tuusuario/promptschema#readme",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
