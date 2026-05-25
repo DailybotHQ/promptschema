@@ -1,7 +1,8 @@
 import type { ZodType, infer as ZodInfer } from 'zod'
 import type { PromptDefinition, PromptInstance, PromptResult, RunOptions } from './types.js'
-import { LLMSchemaValidationError, LLMSchemaRunError, type ValidationIssue } from './errors.js'
+import { LLMSchemaValidationError, type ValidationIssue } from './errors.js'
 import { validateInput } from './schema.js'
+import { runPrompt } from './runner.js'
 
 const KEBAB_CASE_RE = /^[a-z][a-z0-9]*(-[a-z0-9]+)*$/
 const SEMVER_RE = /^\d+\.\d+\.\d+$/
@@ -71,12 +72,11 @@ export function definePrompt<TInput>(
     return normalizeTemplateOutput(raw)
   }
 
-  async function run(_input: TInput, _options?: RunOptions): Promise<PromptResult> {
-    validate(_input)
-    throw new LLMSchemaRunError(
-      name,
-      model,
-      `runner not initialized — adapters will be available in a future version`,
+  async function run(runInput: TInput, options?: RunOptions): Promise<PromptResult> {
+    return runPrompt(
+      { name, version, model, input, template: template as (input: unknown) => string },
+      runInput,
+      options,
     )
   }
 

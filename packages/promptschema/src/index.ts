@@ -52,3 +52,16 @@ export type {
   RegisterOptions,
   BumpOptions,
 } from './versioning/index.js'
+
+export { runPrompt } from './runner.js'
+
+export {
+  registerAdapter,
+  resolveAdapter,
+  estimateCost,
+  PRICING,
+  openaiAdapter,
+  anthropicAdapter,
+  geminiAdapter,
+  ollamaAdapter,
+} from './adapters/index.js'
