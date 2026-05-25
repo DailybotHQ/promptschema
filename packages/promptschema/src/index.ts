@@ -22,3 +22,33 @@ export {
 } from './errors.js'
 
 export type { ValidationIssue } from './errors.js'
+
+export {
+  hashTemplate,
+  hashSchema,
+  createEmptyRegistry,
+  readRegistry,
+  writeRegistry,
+  getPromptEntry,
+  getHistoryEntry,
+  DEFAULT_REGISTRY_PATH,
+  detectChanges,
+  incrementVersion,
+  registerPrompt,
+  bumpPrompt,
+  diffPromptVersions,
+  formatDiff,
+} from './versioning/index.js'
+
+export type {
+  Registry,
+  RegistryPromptEntry,
+  RegistryHistoryEntry,
+  BumpType,
+  ChangeDetail,
+  PromptDiff,
+  SchemaDiff,
+  HistorySummary,
+  RegisterOptions,
+  BumpOptions,
+} from './versioning/index.js'
