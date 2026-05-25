@@ -20,6 +20,9 @@
       }
     }
   },
+  "bin": {
+    "promptschema": "./dist/cli/index.js"
+  },
   "files": ["dist", "README.md", "LICENSE"],
   "engines": {
     "node": ">=18"
