@@ -1,0 +1,41 @@
+[build-system]
+requires      = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name        = "promptschema"
+version     = "0.1.0"
+description = "Typed, versioned prompts for LLMs — the Pydantic for AI prompts"
+readme      = "README.md"
+license     = { file = "LICENSE" }
+requires-python = ">=3.10"
+keywords    = ["llm", "prompts", "ai", "pydantic", "openai", "anthropic", "typing"]
+
+dependencies = [
+  "pydantic>=2.0.0",
+]
+
+[project.optional-dependencies]
+openai    = ["openai>=1.0.0"]
+anthropic = ["anthropic>=0.20.0"]
+gemini    = ["google-generativeai>=0.5.0"]
+all       = ["promptschema[openai,anthropic,gemini]"]
+dev       = [
+  "pytest>=8.0",
+  "pytest-asyncio>=0.24",
+  "pytest-cov>=6.0",
+]
+
+[project.scripts]
+promptschema = "promptschema.cli:main"
+
+[project.urls]
+Homepage   = "https://promptschema.dev"
+Repository = "https://github.com/tuusuario/promptschema"
+
+[tool.pytest.ini_options]
+testpaths    = ["tests"]
+asyncio_mode = "auto"
+
+[tool.coverage.run]
+source = ["promptschema"]
