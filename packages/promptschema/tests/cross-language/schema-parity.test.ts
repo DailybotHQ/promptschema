@@ -5,6 +5,18 @@ import { createEmptyRegistry } from '../../src/versioning/registry.js'
 import { execSync } from 'node:child_process'
 import { resolve } from 'node:path'
 
+function hasPython(): boolean {
+  try {
+    execSync('python3 -c "import pydantic"', { stdio: 'pipe' })
+    return true
+  } catch {
+    return false
+  }
+}
+
+const PYTHON_AVAILABLE = hasPython()
+const itPython = PYTHON_AVAILABLE ? it : it.skip
+
 function normalizeSchema(schema: Record<string, unknown>): Record<string, unknown> {
   const copy = { ...schema }
   delete copy['$schema']
@@ -27,7 +39,7 @@ function normalizeSchema(schema: Record<string, unknown>): Record<string, unknow
 }
 
 describe('cross-language schema parity', () => {
-  it('order-assistant produces compatible JSON Schema in TS and Python', () => {
+  itPython('order-assistant produces compatible JSON Schema in TS and Python', () => {
     const OrderInput = z.object({
       order: z.string(),
       lang: z.enum(['es', 'en']),
@@ -60,7 +72,7 @@ describe('cross-language schema parity', () => {
     expect(tsRequired).toEqual(pyRequired)
   })
 
-  it('both packages produce compatible empty registry', () => {
+  itPython('both packages produce compatible empty registry', () => {
     const tsRegistry = createEmptyRegistry()
 
     const pythonOutput = execSync(
