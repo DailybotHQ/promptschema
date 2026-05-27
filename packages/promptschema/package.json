@@ -15,7 +15,7 @@
   "author": "Oscar",
   "repository": {
     "type": "git",
-    "url": "https://github.com/DailybotHQ/promptschema",
+    "url": "git+https://github.com/DailybotHQ/promptschema.git",
     "directory": "packages/promptschema"
   },
   "homepage": "https://github.com/DailybotHQ/promptschema#readme",
@@ -36,7 +36,7 @@
     }
   },
   "bin": {
-    "promptschema": "./dist/cli/index.js"
+    "promptschema": "dist/cli/index.js"
   },
   "files": [
     "dist",
