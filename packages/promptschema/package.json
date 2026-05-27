@@ -15,10 +15,10 @@
   "author": "Oscar",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tuusuario/promptschema",
+    "url": "https://github.com/DailybotHQ/promptschema",
     "directory": "packages/promptschema"
   },
-  "homepage": "https://github.com/tuusuario/promptschema#readme",
+  "homepage": "https://github.com/DailybotHQ/promptschema#readme",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -62,6 +62,7 @@
     "zod-to-json-schema": "^3.24.5"
   },
   "devDependencies": {
+    "@types/node": "^22",
     "@eslint/js": "^10.0.1",
     "@vitest/coverage-v8": "^3",
     "eslint": "^10.4.0",

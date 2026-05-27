@@ -57,9 +57,9 @@ export function jsonSchemaToZod(schema: Record<string, unknown>): ZodType {
         shape[key] = required.includes(key) ? zodProp : zodProp.optional()
       }
 
-      let obj = z.object(shape)
+      const obj = z.object(shape)
       if (schema.additionalProperties === false) {
-        obj = obj.strict()
+        return obj.strict()
       }
       return obj
     }
