@@ -30,8 +30,8 @@ dev       = [
 promptschema = "promptschema.cli:main"
 
 [project.urls]
-Homepage   = "https://promptschema.dev"
-Repository = "https://github.com/tuusuario/promptschema"
+Homepage   = "https://github.com/DailybotHQ/promptschema"
+Repository = "https://github.com/DailybotHQ/promptschema"
 
 [tool.pytest.ini_options]
 testpaths    = ["tests"]
