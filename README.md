@@ -4,8 +4,8 @@
 Stop hardcoding AI prompts as strings. Define them as contracts.
 
 ```bash
-npm install promptschema          # TypeScript / JavaScript
-pip install promptschema          # Python
+npm install @dailybot/promptschema    # TypeScript / JavaScript
+pip install promptschema              # Python
 ```
 
 <!-- TODO: Add demo GIF here -->
@@ -39,7 +39,7 @@ Nobody knows what version of this prompt is in production.
 
 ```ts
 // ✅ With promptschema (TypeScript)
-import { definePrompt, z } from 'promptschema'
+import { definePrompt, z } from '@dailybot/promptschema'
 
 const orderPrompt = definePrompt({
   name:    'order-assistant',
@@ -93,7 +93,7 @@ Define prompts in one language, load them in another — from the same registry:
 
 ```ts
 // TypeScript — load a prompt defined anywhere (TS or Python)
-import { loadFromRegistry } from 'promptschema'
+import { loadFromRegistry } from '@dailybot/promptschema'
 
 const prompt = loadFromRegistry('order-assistant')
 // prompt.name    → 'order-assistant'
@@ -121,7 +121,7 @@ The registry stores JSON Schema, so both languages reconstruct identical validat
 
 ```bash
 # TypeScript / JavaScript
-npm install promptschema
+npm install @dailybot/promptschema
 
 # Python
 pip install promptschema[openai]       # OpenAI
@@ -181,7 +181,7 @@ The same commands work with Python: `promptschema status`, `promptschema bump`, 
 Register your own LLM provider in a few lines:
 
 ```ts
-import { registerAdapter } from 'promptschema'
+import { registerAdapter } from '@dailybot/promptschema'
 
 registerAdapter('my-provider', {
   name: 'my-provider',
